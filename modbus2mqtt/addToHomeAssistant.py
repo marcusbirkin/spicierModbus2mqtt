@@ -41,7 +41,7 @@ class HassConnector:
         config["object_id"] = f"{ref.device.name}_{ref.topic}"
         config["unique_id"] = config["object_id"]
         
-        config["state_topic"] = f"{self.globaltopic}{ref.device.name}/state/{ref.topic}", 
+        config["state_topic"] = f"{self.globaltopic}{ref.device.name}/state/{ref.topic}"
        
         return config
 
