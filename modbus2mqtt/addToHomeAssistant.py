@@ -37,6 +37,11 @@ class HassConnector:
  
         if ref.name:
             config["name"] = f"{ref.device.description} {ref.name}"
+            
+        config["object_id"] = f"{ref.device.name}_{ref.topic}"
+        config["unique_id"] = config["object_id"]
+        
+        config["state_topic"] = f"{self.globaltopic}{ref.device.name}/state/{ref.topic}", 
        
         return config
 
@@ -44,8 +49,8 @@ class HassConnector:
         if(self.verbosity):
             print(f"Adding binary sensor {ref.topic} to HASS")
 
-        object_id = f"{ref.device.name}_{ref.topic}"
-        config = {"name": object_id, "object_id": object_id, "state_topic": f"{self.globaltopic}{ref.device.name}/state/{ref.topic}", "payload_on": True, "payload_off": False}
+        
+        config = {"payload_on": True, "payload_off": False}
         config.update(meta)
 
         self.mqc.publish(f"homeassistant/binary_sensor/{self.globaltopic[0:-1]}_{ref.device.name}_{ref.topic}/config", json.dumps(config), qos=0, retain=True)
@@ -54,8 +59,7 @@ class HassConnector:
         if(self.verbosity):
             print(f"Adding sensor {ref.topic} to HASS")
 
-        object_id = f"{ref.device.name}_{ref.topic}"
-        config = {"name": object_id, "object_id": object_id, "state_topic": f"{self.globaltopic}{ref.device.name}/state/{ref.topic}"}
+        config = {}
         config.update(meta)
 
         self.mqc.publish(f"homeassistant/sensor/{self.globaltopic[0:-1]}_{ref.device.name}_{ref.topic}/config", json.dumps(config), qos=0, retain=True)
@@ -64,8 +68,7 @@ class HassConnector:
         if(self.verbosity):
             print(f"Adding switch {ref.topic} to HASS")
 
-        object_id = f"{ref.device.name}_{ref.topic}"
-        config = {"name": object_id, "object_id": object_id, "state_topic": f"{self.globaltopic}{ref.device.name}/set/{ref.topic}", "payload_on": True, "payload_off": False}
+        config = {"payload_on": True, "payload_off": False}
         config.update(meta)
 
         self.mqc.publish(f"homeassistant/switch/{self.globaltopic[0:-1]}_{ref.device.name}_{ref.topic}/config", json.dumps(config), qos=0, retain=True)
