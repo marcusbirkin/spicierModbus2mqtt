@@ -54,7 +54,7 @@
 #################################################################################
 # Columns:
 # type, topic, slaveid, reference, size, functioncode, rate, , , , name
-# type, topic, reference, rw, data type, state_class, device_class, unit_of_measurement, name
+# type, topic, reference, rw, data type, scaling factor, ,state_class, device_class, unit_of_measurement, name
 #
 poll,kitchen,7,0,4,coil,0.002
 ref,light0,0,rw
