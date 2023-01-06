@@ -558,7 +558,7 @@ class Reference:
             if self.lastval != val or args.always_publish:
                 self.lastval = val
                 if self.scale:
-                    val = val * self.scale
+                    val = float(val) * self.scale
                 try:
                     publish_result = mqc.publish(globaltopic+self.device.name+"/state/"+self.topic,val,retain=True)
                     if verbosity>=4:
